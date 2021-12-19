@@ -4,14 +4,13 @@ import com.game.units.Knight;
 import com.game.units.Warrior;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WarriorTest {
 
-    //From git
     @Test
     void bobIsAliveShouldBeTrue() {
-
         var bob = new Warrior();
         var mars = new Warrior();
 
@@ -22,7 +21,6 @@ class WarriorTest {
 
     @Test
     void zeusIsAliveShouldBeTrue() {
-
         var zeus = new Knight();
         var godkiller = new Warrior();
 
@@ -33,7 +31,6 @@ class WarriorTest {
 
     @Test
     void wifeIsAliveShouldBeFalse() {
-
         var husband = new Warrior();
         var wife = new Warrior();
 
@@ -42,12 +39,9 @@ class WarriorTest {
 
     }
 
-    private void assertFalse(boolean alive) {
-    }
 
     @Test
     void knightIsAliveShouldBeFalse() {
-
         var dragon = new Warrior();
         var knight = new Knight();
 

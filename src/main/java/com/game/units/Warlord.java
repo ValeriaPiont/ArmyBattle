@@ -1,36 +1,44 @@
 package com.game.units;
 
-import com.game.weapon.Weapon;
+import com.game.weapons.Weapon;
 
 public class Warlord extends Warrior implements HasDefense {
-    private static final int INIT_HEALTH = 100;
+    private static final int START_HEALTH = 100;
     private int defense = 2;
-    private int attack;
+    private int attack = 4;
 
     public Warlord() {
-        super(INIT_HEALTH);
+        super(START_HEALTH);
     }
 
     @Override
     public void equipWeapon(Weapon weapon) {
         super.equipWeapon(weapon);
-        this.defense = Math.max(0,this.defense + weapon.getDefence());
-      //  this.defence = getDefence() + weapon.getDefence();
-
+        this.defense = Math.max(0, this.defense + weapon.getDefence());
     }
 
     @Override
-    protected int getInitAttack() {
+    protected void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    @Override
+    public int getAttack() {
         return attack;
     }
 
     @Override
-    public void damage(HasAttack warrior) {
+    protected void damage(HasAttack warrior) {
         setHealth(getHealth() - Math.max(0, warrior.getAttack() - getDefense()));
     }
 
     @Override
     public int getDefense() {
         return defense;
+    }
+
+    @Override
+    public String toString() {
+        return "Warlord";
     }
 }

@@ -1,24 +1,20 @@
 package com.game.units;
 
-import com.game.weapon.Weapon;
+import com.game.weapons.Weapon;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Warrior implements HasAttack {
 
     private static final int START_HEALTH = 50;
-    private static final int DEFAULT_WARRIOR_ATTACK = 5;
-    private int initHealth;
+    private int attack = 5;
+    private final int startHealth;
     private int health;
-
     private Warrior behindWarrior;
-    private final List<Weapon> weaponList = new ArrayList<>();
 
     protected Warrior(int health) {
         this.health = health;
-        this.initHealth = health;
+        this.startHealth = health;
     }
 
     public Warrior() {
@@ -35,21 +31,30 @@ public class Warrior implements HasAttack {
             case "Healer" -> new Healer();
             case "Warlord" -> new Warlord();
             case "Rookie" -> new Rookie();
-            default -> throw new IllegalArgumentException("Invalid Warrior type");
+            default -> throw new IllegalArgumentException("Invalid warrior type");
         };
     }
 
-
-    public void actionForBehind() {
+    protected void actionForBehind() {
         if (Objects.nonNull(this.getBehindWarrior())) {
             this.getBehindWarrior().processActionForBehind(this);
         }
     }
 
-    public void processActionForBehind(Warrior warrior) {
+    protected void processActionForBehind(Warrior warrior) {
         if (Objects.nonNull(warrior.getBehindWarrior())) {
             warrior.getBehindWarrior().actionForBehind();
         }
+    }
+
+
+    public void equipWeapon(Weapon weapon) {
+        setHealth(getHealth() + weapon.getHealth());
+        setAttack(getAttack() + weapon.getAttack());
+    }
+
+    public int getAttack() {
+        return attack;
     }
 
     protected void setHealth(int health) {
@@ -57,24 +62,15 @@ public class Warrior implements HasAttack {
     }
 
 
-    public void equipWeapon(Weapon weapon) {
-        this.weaponList.add(weapon);
-        this.initHealth = getInitHealth() + weapon.getHealth();
-        setHealth(getHealth() + weapon.getHealth());
-    }
-
-    public int getAttack() {
-        if (getInitAttack() == 0){
-            return 0;
-        }
-        return getInitAttack() + weaponList.stream().mapToInt(Weapon::getAttack).sum();
+    protected void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public boolean isAlive() {
         return getHealth() > 0;
     }
 
-    public void damage(HasAttack warrior) {
+    protected void damage(HasAttack warrior) {
         setHealth(getHealth() - warrior.getAttack());
     }
 
@@ -91,16 +87,16 @@ public class Warrior implements HasAttack {
         this.behindWarrior = behindWarrior;
     }
 
-    protected int getInitHealth() {
-        return initHealth;
+    protected int getStartHealth() {
+        return startHealth;
     }
 
     public int getHealth() {
         return health;
     }
 
-    protected int getInitAttack() {
-        return DEFAULT_WARRIOR_ATTACK;
+    @Override
+    public String toString() {
+        return "Warrior";
     }
-
 }

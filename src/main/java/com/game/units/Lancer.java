@@ -3,27 +3,40 @@ package com.game.units;
 import java.util.Objects;
 
 public class Lancer extends Warrior {
-    private static final int INIT_HEALTH = 50;
+    private static final int START_HEALTH = 50;
     private int attack = 6;
+    private static int weakening = 50;
 
     public Lancer() {
-        super(INIT_HEALTH);
+        super(START_HEALTH);
     }
 
     @Override
-    protected int getInitAttack() {
+    protected void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    @Override
+    public int getAttack() {
         return attack;
     }
 
     @Override
     public void attack(Warrior warrior) {
-        int healthDecrease = warrior.getHealth();
+        int decreasing = warrior.getHealth();
         super.attack(warrior);
-        healthDecrease = healthDecrease - warrior.getHealth();
-        int decay = 50;
-        int attackForSecond = healthDecrease * decay / 100;
-        if (!Objects.isNull(warrior.getBehindWarrior())) {
-            warrior.getBehindWarrior().damage(() -> attackForSecond);
+        decreasing = decreasing - warrior.getHealth();
+        int attackForBehind = decreasing * weakening / 100;
+
+        Warrior warriorBehind = warrior.getBehindWarrior();
+
+        if (Objects.nonNull(warriorBehind)) {
+            warriorBehind.damage(() -> attackForBehind);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Lancer";
     }
 }

@@ -6,95 +6,99 @@ import java.util.List;
 
 public class Battle {
     public static boolean fight(Warrior warrior1, Warrior warrior2) {
-        while (true) {
-            if (warrior1.isAlive()) {
-                warrior1.attack(warrior2);
-            } else {
-                return false;
-            }
 
-
-            if (warrior2.isAlive()) {
-                warrior2.attack(warrior1);
-            } else {
-                return true;
-            }
+        if (warrior1.isAlive()) {
+            warrior1.attack(warrior2);
+        } else {
+            return false;
         }
+
+        if (warrior2.isAlive()) {
+            warrior2.attack(warrior1);
+        } else {
+            return true;
+        }
+
+        return fight(warrior1, warrior2);
     }
 
     public static boolean fight(Army army1, Army army2) {
-        int firstArmySize = army1.getArmySize();
-        int secondArmySize = army2.getArmySize();
-
+        int army1Alive = army1.getAliveAmount();
+        int army2Alive = army2.getAliveAmount();
+        boolean isWarlordInArmy1 = army1.isWarlordInArmy();
+        boolean isWarlordInArmy2 = army2.isWarlordInArmy();
         while (true) {
-            if (army1.getArmySize() != firstArmySize) {
+            if (isWarlordInArmy1 && army1.getAliveAmount() != army1Alive) {
                 army1.moveUnits();
-                army1.lineUp();
-                army1.reorganizeArmyIntoColumn();
-                firstArmySize = army1.getArmySize();
+                //реорганизация армии
+                army1.armyToLine();
+                army1.armyToColumn();
+                //изменение размера
+                army1Alive = army1.getAliveAmount();
             }
-            if (army2.getArmySize() != secondArmySize) {
+            if (isWarlordInArmy2 && army2.getAliveAmount() != army2Alive) {
                 army2.moveUnits();
-                army2.lineUp();
-                army2.reorganizeArmyIntoColumn();
-                secondArmySize = army2.getArmySize();
+                //реорганизация армии
+                army2.armyToLine();
+                army2.armyToColumn();
+                //изменение размера
+                army2Alive = army2.getAliveAmount();
             }
+            var warrior1 = army1.getFirstAlive();
 
-            var attacker = army1.getFirstWarrior();
-            if (attacker.isEmpty()) {
+            if (warrior1.isEmpty()) {
                 return false;
             }
-            var defender = army2.getFirstWarrior();
-            if (defender.isEmpty()) {
+
+            var warrior2 = army2.getFirstAlive();
+
+            if (warrior2.isEmpty()) {
                 return true;
             }
-
-            fight(attacker.get(), defender.get());
-
+            fight(warrior1.get(), warrior2.get());
         }
     }
 
     public static boolean straightFight(Army army1, Army army2) {
-        // Строем ширенгу
-        army1.lineUp();
-        army2.lineUp();
 
-        int firstArmySize = army1.getArmySize();
-        int secondArmySize = army2.getArmySize();
+        army1.armyToLine();
+        army2.armyToLine();
+
+        int army1Alive = army1.getAliveAmount();
+        int army2Alive = army2.getAliveAmount();
+        boolean isWarlordInArmy1 = army1.isWarlordInArmy();
+        boolean isWarlordInArmy2 = army2.isWarlordInArmy();
+
+        List<Warrior> aliveUnits1;
+        List<Warrior> aliveUnits2;
+
         while (true) {
 
-            var attacker = army1.getFirstWarrior();
-            if (attacker.isEmpty()) {
-                // Строем колонну
-                army2.reorganizeArmyIntoColumn();
+            if (army1.getFirstAlive().isEmpty()) {
+                army2.armyToColumn();
                 return false;
             }
-            var defender = army2.getFirstWarrior();
-            if (defender.isEmpty()) {
-                // Строем колонну
-                army1.reorganizeArmyIntoColumn();
+
+            if (army2.getFirstAlive().isEmpty()) {
+                army1.armyToColumn();
                 return true;
             }
 
-            // Убираем мертвецов
-            List<Warrior> units1 = army1.getAliveUnits();
-            List<Warrior> units2 = army2.getAliveUnits();
-            // Сражение
-            for (int i = 0; i < Math.min(units1.size(), units2.size()); i++) {
+            aliveUnits1 = army1.getAliveUnits();
+            aliveUnits2 = army2.getAliveUnits();
 
-
-                fight(units1.get(i), units2.get(i));
-
-                if (army1.getArmySize() != firstArmySize) {
+            for (int i = 0; i < Math.min(aliveUnits1.size(), aliveUnits2.size()); i++) {
+                fight(aliveUnits1.get(i), aliveUnits2.get(i));
+                if (isWarlordInArmy1 && army1.getAliveAmount() != army1Alive) {
                     army1.moveUnits();
-                    firstArmySize = army1.getArmySize();
+                    army1Alive = army1.getAliveAmount();
                 }
-                if (army2.getArmySize() != secondArmySize) {
+                if (isWarlordInArmy2 && army2.getAliveAmount() != army2Alive) {
                     army2.moveUnits();
-                    secondArmySize = army2.getArmySize();
-
+                    army2Alive = army2.getAliveAmount();
                 }
             }
+
         }
     }
 }

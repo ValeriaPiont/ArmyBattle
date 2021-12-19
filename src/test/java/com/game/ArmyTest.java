@@ -1,17 +1,20 @@
 package com.game;
 
-import com.game.units.*;
-import com.game.weapon.Shield;
-import com.game.weapon.Sword;
+import com.game.units.Warrior;
+import com.game.units.Vampire;
+import com.game.units.Defender;
+import com.game.units.Knight;
+import com.game.units.Healer;
+import com.game.units.Lancer;
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArmyTest {
     @ParameterizedTest(name = "[{index}] | expected = {0} | firstArmy = {1} | secondArmy = {2} | ")
@@ -197,110 +200,4 @@ class ArmyTest {
                                 .addUnits(Lancer.class, 4))
         );
     }
-
-
-    @Test
-    public void test() {
-        Army army1 = new Army();
-        Army army2 = new Army();
-        army1.addUnits(Lancer.class, 1);
-
-        army2.addUnits(Warrior.class, 1);
-        army2.addUnits(Knight.class, 1);
-
-
-
-    }
-
-//
-//    @Test
-//    void battleTestArmyFightWithWarlordFirst() {
-//        Army army_1 = new Army()
-//                .addUnits("Warlord", 1)
-//                .addUnits("Warrior", 2)
-//                .addUnits("Lancer", 2)
-//                .addUnits("Healer", 2)
-//                .addUnits("Healer", 1);
-//        Army army_2 = new Army()
-//                .addUnits("Warlord", 1)
-//                .addUnits("Vampire", 1)
-//                .addUnits("Healer", 2)
-//                .addUnits("Knight", 2);
-//        army_1.moveUnits();
-//        army_2.moveUnits();
-//
-//        var result = Battle.fight(army_1, army_2);
-//
-//        assertTrue(result);
-//    }
-//
-//    @Test
-//    void battleTestArmyFightWithWarlordSecond() {
-//        Army army_1 = new Army()
-//                .addUnits("Warrior", 2)
-//                .addUnits("Lancer", 2)
-//                .addUnits("Defender", 1)
-//                .addUnits("Warlord", 3);
-//        Army army_2 = new Army()
-//                .addUnits("Warlord", 2)
-//                .addUnits("Vampire", 1)
-//                .addUnits("Healer", 5)
-//                .addUnits("Knight", 2);
-//
-//        army_1.moveUnits();
-//        army_2.moveUnits();
-//
-//        var result = Battle.fight(army_1, army_2);
-//
-//        assertFalse(result);
-//    }
-//
-//    @Test
-//    void battleTestArmyFightWithWarlordThird() {
-//        Army army_1 = new Army()
-//                .addUnits("Warrior", 2)
-//                .addUnits("Lancer", 3)
-//                .addUnits("Defender", 1)
-//                .addUnits("Warlord", 4);
-//
-//        Army army_2 = new Army()
-//                .addUnits("Warlord", 1)
-//                .addUnits("Vampire", 1)
-//                .addUnits("Rookie", 1)
-//                .addUnits("Knight", 1);
-//
-//        army_1.getUnits().get(0).equipWeapon(Sword.getInstance());
-//        army_2.getUnits().get(0).equipWeapon(Shield.getInstance());
-//        army_1.moveUnits();
-//        army_2.moveUnits();
-//
-//        var result = Battle.fight(army_1, army_2);
-//
-//        assertTrue(result);
-//    }
-//
-//    @Test
-//    void battleTestArmyFightWithWarlordForth() {
-//        Army army_1 = new Army()
-//                .addUnits("Warrior", 2)
-//                .addUnits("Lancer", 3)
-//                .addUnits("Defender", 1)
-//                .addUnits("Warlord", 1);
-//
-//        Army army_2 = new Army()
-//                .addUnits("Warlord", 5)
-//                .addUnits("Vampire", 1)
-//                .addUnits("Rookie", 1)
-//                .addUnits("Knight", 1);
-//
-//        army_1.getUnits().get(0).equipWeapon(Sword.getInstance());
-//        army_2.getUnits().get(0).equipWeapon(Shield.getInstance());
-//        army_1.moveUnits();
-//        army_2.moveUnits();
-//
-//        var result = Battle.straightFight(army_1, army_2);
-//
-//        assertFalse(result);
-//    }
-
 }

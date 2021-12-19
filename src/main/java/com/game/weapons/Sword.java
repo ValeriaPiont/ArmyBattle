@@ -1,4 +1,4 @@
-package com.game.weapon;
+package com.game.weapons;
 
 public class Sword extends Weapon {
     private static final int HEALTH = 5;

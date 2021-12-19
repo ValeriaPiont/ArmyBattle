@@ -1,19 +1,24 @@
 package com.game.units;
 
-import com.game.weapon.Weapon;
+import com.game.weapons.Weapon;
 
 public class Vampire extends Warrior {
-    private static final int INIT_HEALTH = 40;
+    private static final int START_HEALTH = 40;
     private int vampirism = 50;
     private int attack = 4;
 
     public Vampire() {
-        super(INIT_HEALTH);
+        super(START_HEALTH);
     }
 
     @Override
-    protected int getInitAttack() {
+    public int getAttack() {
         return attack;
+    }
+
+    @Override
+    protected void setAttack(int attack) {
+        this.attack = attack;
     }
 
     @Override
@@ -28,7 +33,12 @@ public class Vampire extends Warrior {
         super.attack(warrior);
         damage = damage - warrior.getHealth();
 
-        setHealth(Math.min(getHealth() + damage * vampirism / 100, getInitHealth()));
+        setHealth(Math.min(getHealth() + damage * vampirism / 100, getStartHealth()));
 
+    }
+
+    @Override
+    public String toString() {
+        return "Vampire";
     }
 }

@@ -1,10 +1,11 @@
 package com.game;
 
-
 import com.game.units.Defender;
 import com.game.units.Knight;
 import com.game.units.Vampire;
 import com.game.units.Warrior;
+import com.game.units.Rookie;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,57 +14,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class BattleTest {
 
-    public static class Rookie extends Warrior {
-        private static int attack = 1;
-
-        public int getAttack() {
-            return attack;
-        }
-    }
-
-    @Test
-    void test1() {
-        //arrange
-        var chuck = new Warrior();
-        var bruce = new Warrior();
-        var carl = new Knight();
-        var dave = new Warrior();
-
-        //act
-        var res1 = Battle.fight(chuck, bruce);
-        var res2 = Battle.fight(dave, carl);
-
-        //assert
-        assertTrue(res1);
-        assertFalse(res2);
-    }
-
-    @Test
-    void test2() {
-        //arrange
-        var chuck = new Warrior();
-        var bruce = new Warrior();
-        var carl = new Knight();
-        var dave = new Warrior();
-
-        //act
-        Battle.fight(chuck, bruce);
-        Battle.fight(dave, carl);
-
-        //assert
-        assertTrue(chuck.isAlive());
-        assertFalse(bruce.isAlive());
-        assertTrue(carl.isAlive());
-        assertFalse(dave.isAlive());
-    }
-
     @Test
     @DisplayName("Warrior&Knight")
-    void fight1() {
+    void fight1_shouldReturnFalse() {
         var chuck = new Warrior();
         var jim = new Knight();
 
@@ -72,7 +31,7 @@ class BattleTest {
 
     @Test
     @DisplayName("Knight&Warrior")
-    void fight2() {
+    void fight2_shouldReturnTrue() {
         var ramon = new Knight();
         var slevin = new Warrior();
 
@@ -81,7 +40,7 @@ class BattleTest {
 
     @Test
     @DisplayName("Warrior&Warrior")
-    void fight3() {
+    void fight3_shouldReturnTrue() {
         var bob = new Warrior();
         var mars = new Warrior();
 
@@ -91,7 +50,7 @@ class BattleTest {
 
     @Test
     @DisplayName("Knight&Knight")
-    void fight4() {
+    void fight4_shouldReturnTrue() {
         var dragon = new Knight();
         var knight = new Knight();
 
@@ -100,7 +59,7 @@ class BattleTest {
 
     @Test
     @DisplayName("Warrior&Defender")
-    void fight5() {
+    void fight5_shouldReturnTrue() {
         var warrior = new Warrior();
         var defender = new Defender();
 
@@ -109,19 +68,20 @@ class BattleTest {
 
 
     @Test
-    @DisplayName("RookieTest")
-    void fight6() {
+    @DisplayName("Defender&Rookie")
+    void fight6_RookieHealthShouldBeSixty() {
         var defender = new Defender();
         var rookie = new Rookie();
 
         Battle.fight(defender, rookie);
-        System.out.println(defender.getHealth());
+        int expectedHealth = 60;
 
-        assertEquals(defender.getHealth(), 60);
+        assertEquals(defender.getHealth(), expectedHealth);
     }
 
     @Test
-    public void checkVampire(){
+    @DisplayName("Vampire&Rookie")
+     void fight6_shouldReturnTrue(){
         var defender = new Defender();
         var vampire = new Vampire();
 
@@ -129,8 +89,6 @@ class BattleTest {
 
     }
 
-
-    //parametrized test
     @ParameterizedTest(name = "[{index}] firstType = {0} | secondType = {1} | expected = {2} ")
     @MethodSource("fightsDataProvider")
     void fights(boolean expected, Warrior warrior1, Warrior warrior2) {
@@ -145,6 +103,5 @@ class BattleTest {
                 Arguments.of(true, new Knight(),  new Warrior())
         );
     }
-
 
 }

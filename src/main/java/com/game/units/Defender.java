@@ -1,6 +1,6 @@
 package com.game.units;
 
-import com.game.weapon.Weapon;
+import com.game.weapons.Weapon;
 
 public class Defender extends Warrior implements HasDefense {
     private static final int START_HEALTH = 60;
@@ -14,25 +14,31 @@ public class Defender extends Warrior implements HasDefense {
     @Override
     public void equipWeapon(Weapon weapon) {
         super.equipWeapon(weapon);
-       // this.defence = this.defence + weapon.getDefence();
-        this.defense = Math.max(0,this.defense + weapon.getDefence());
-
-       // this.defence = getDefence() + weapon.getDefence(); //was
-      //  this.vampirism = Math.max(0, this.vampirism + weapon.getVampirism());
+        this.defense = Math.max(0, this.defense + weapon.getDefence());
     }
 
     @Override
-    public void damage(HasAttack warrior) {
+    protected void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    @Override
+    protected void damage(HasAttack warrior) {
         setHealth(getHealth() - Math.max(0, warrior.getAttack() - defense));
     }
 
     @Override
-    protected int getInitAttack() {
+    public int getAttack() {
         return attack;
     }
 
     @Override
     public int getDefense() {
         return defense;
+    }
+
+    @Override
+    public String toString() {
+        return "Defender";
     }
 }

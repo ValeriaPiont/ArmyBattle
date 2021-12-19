@@ -1,7 +1,12 @@
 package com.game;
 
-import com.game.units.*;
-import org.junit.jupiter.api.Test;
+import com.game.units.Defender;
+import com.game.units.Knight;
+import com.game.units.Vampire;
+import com.game.units.Warrior;
+import com.game.units.Lancer;
+import com.game.units.Healer;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 class StraightFightTest {
     @ParameterizedTest(name = "[{index}] | expected = {0} | firstArmy = {1} | secondArmy = {2} | ")
@@ -52,11 +56,7 @@ class StraightFightTest {
     @ParameterizedTest(name = "[{index}] | expected = {0} | firstArmy = {1} | secondArmy = {2} | ")
     @MethodSource("fightDataProvider_straightFights_shouldReturnFalse")
     void straightFights_shouldReturnFalse(boolean expected, Army army1, Army army2) {
-//        System.out.println(army1);
-//        System.out.println(army2);
         assertEquals(expected, Battle.straightFight(army1, army2));
-//        System.out.println(army1.getUnits());
-//        System.out.println(army2.getUnits());
     }
 
     static Stream<Arguments> fightDataProvider_straightFights_shouldReturnFalse() {

@@ -1,4 +1,4 @@
-package com.game.weapon;
+package com.game.weapons;
 
 public class Weapon {
     private final int health;

@@ -1,24 +1,25 @@
 package com.game;
 
-import com.game.units.*;
-import com.game.weapon.Sword;
-import com.game.weapon.Weapon;
+import com.game.units.Defender;
+import com.game.units.Knight;
+import com.game.units.Vampire;
+import com.game.units.Warrior;
+import com.game.units.Healer;
+import com.game.units.Lancer;
+
+import com.game.weapons.Sword;
+import com.game.weapons.Weapon;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WeaponTest {
-//    health - добавляет к максимальному и текущему запасу здоровья солдата указанное число
-//    attack - добавляет к атаке солдата указанное число
-//    defense - добавляет к защите солдата указанное число
-//    vampirism - увеличивает вампиризм на указанное количество процентов
-//    heal_power - увеличивает количество здоровья, которое восстанавливает лекарь при каждом исцелении на указанное число
+class WeaponTest {
 
     @Test
-    @DisplayName("Test Weapon 1")
-    public void testWeapon1(){
+    @DisplayName("fightWithWeapon1: weapon(health -10, attack 5, vampirism 40), Sword")
+    void fightWithWeapon1_shouldReturnTrue(){
         var warrior = new Warrior();
         var vampire = new Vampire();
 
@@ -29,9 +30,10 @@ public class WeaponTest {
 
     }
 
+
     @Test
-    @DisplayName("Test Weapon 2")
-    public void testWeapon2(){
+    @DisplayName("fightWithWeapon2: Shield, GreatAxe")
+    void fightWithWeapon2_shouldReturnFalse(){
         var defender = new Defender();
         var lancer = new Lancer();
 
@@ -43,8 +45,8 @@ public class WeaponTest {
     }
 
     @Test
-    @DisplayName("Test Weapon 3")
-    public void testWeapon3(){
+    @DisplayName("fightWithWeapon3: Shield, GreatAxe")
+     void fightWithWeapon3_shouldReturnFalse(){
         var defender = new Defender();
         var lancer = new Lancer();
 
@@ -56,33 +58,24 @@ public class WeaponTest {
     }
 
     @Test
-    @DisplayName("Test Weapon 4")
-    public void testWeapon4(){
+    @DisplayName("fightWithWeapon4: Shield, MagicWand")
+    void fightWithWeapon4_shouldReturnFalse(){
         var defender = new Defender();
         var vampire = new Vampire();
 
-        System.out.println(defender);
-        //    Shield - health +20, attack -1, defense +2
         defender.equipWeapon(Weapon.getShield());
-        //    MagicWand - health +30, attack +3, heal_power +3
         defender.equipWeapon(Weapon.getMagicWand());
-        System.out.println(defender);
-        System.out.println("-----------------");
-        System.out.println(vampire);
-        //    Shield - health +20, attack -1, defense +2
-        vampire.equipWeapon(Weapon.getShield());
-        //    Katana - health -20, attack +6, defense -5, vampirism +50%
-        vampire.equipWeapon(Weapon.getKatana());
-        System.out.println(vampire);
-        System.out.println("-----------------");
-        assertFalse(Battle.fight(defender, vampire));
 
+        vampire.equipWeapon(Weapon.getShield());
+        vampire.equipWeapon(Weapon.getKatana());
+
+        assertFalse(Battle.fight(defender, vampire));
     }
 
 
     @Test
-    @DisplayName("Test Weapon 5")
-    public void testWeapon5(){
+    @DisplayName("fightWithWeapon4: MagicWand, GreatAxe, MagicWand, GreatAxe")
+    void fightWithWeapon5_shouldReturnTrue(){
         Army army = new Army();
         army.addUnits(Knight.class, 1);
         army.addUnits(Lancer.class, 1);
@@ -98,7 +91,6 @@ public class WeaponTest {
         enemyArmy.getUnit(1).equipWeapon(Weapon.getGreatAxe());
 
         assertTrue(Battle.fight(army, enemyArmy));
-
     }
 
 
