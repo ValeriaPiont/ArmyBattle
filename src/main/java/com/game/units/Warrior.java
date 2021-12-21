@@ -35,6 +35,20 @@ public class Warrior implements HasAttack {
         };
     }
 
+    public void equipWeapon(Weapon weapon) {
+        setHealth(getHealth() + weapon.getHealth());
+        setAttack(getAttack() + weapon.getAttack());
+    }
+
+    protected void damage(HasAttack warrior) {
+        setHealth(getHealth() - warrior.getAttack());
+    }
+
+    public void attack(Warrior warrior) {
+        warrior.damage(this);
+        actionForBehind();
+    }
+
     protected void actionForBehind() {
         if (Objects.nonNull(this.getBehindWarrior())) {
             this.getBehindWarrior().processActionForBehind(this);
@@ -48,11 +62,6 @@ public class Warrior implements HasAttack {
     }
 
 
-    public void equipWeapon(Weapon weapon) {
-        setHealth(getHealth() + weapon.getHealth());
-        setAttack(getAttack() + weapon.getAttack());
-    }
-
     public int getAttack() {
         return attack;
     }
@@ -61,22 +70,12 @@ public class Warrior implements HasAttack {
         this.health = health;
     }
 
-
     protected void setAttack(int attack) {
         this.attack = attack;
     }
 
     public boolean isAlive() {
         return getHealth() > 0;
-    }
-
-    protected void damage(HasAttack warrior) {
-        setHealth(getHealth() - warrior.getAttack());
-    }
-
-    public void attack(Warrior warrior) {
-        warrior.damage(this);
-        actionForBehind();
     }
 
     protected Warrior getBehindWarrior() {

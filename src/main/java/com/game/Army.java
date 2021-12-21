@@ -16,12 +16,12 @@ public class Army {
 
     Army addUnits(Class<? extends Warrior> warriorType, int count) {
         String name = warriorType.getSimpleName();
-        final int end;
+        int end;
 
-        if(name.equals("Warlord")){
-            if(isWarlordInArmy()){
+        if (name.equals("Warlord")) {
+            if (isWarlordInArmy()) {
                 return this;
-            }else{
+            } else {
                 count = 1;
             }
         }
@@ -43,7 +43,6 @@ public class Army {
         return units.get(index);
     }
 
-
     public Optional<Warrior> getFirstAlive() {
         return units.stream().filter(Warrior::isAlive).findFirst();
     }
@@ -64,7 +63,7 @@ public class Army {
 
     public void armyToColumn() {
         for (int i = 0; i < getAliveAmount(); i++) {
-            if ( i > 0) {
+            if (i > 0) {
                 getAliveUnits().get(i - 1).setBehindWarrior(getAliveUnits().get(i));
             }
         }

@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ArmyTest {
+
     @ParameterizedTest(name = "[{index}] | expected = {0} | firstArmy = {1} | secondArmy = {2} | ")
     @MethodSource("fightDataProvider_fights1")
     @DisplayName("fights between warriors and warriors")

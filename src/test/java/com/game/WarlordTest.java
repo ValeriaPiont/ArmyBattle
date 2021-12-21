@@ -98,5 +98,4 @@ class WarlordTest {
 
         assertFalse(Battle.straightFight(army1, army2));
     }
-
 }

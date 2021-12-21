@@ -30,18 +30,14 @@ public class Battle {
         while (true) {
             if (isWarlordInArmy1 && army1.getAliveAmount() != army1Alive) {
                 army1.moveUnits();
-                //реорганизация армии
                 army1.armyToLine();
                 army1.armyToColumn();
-                //изменение размера
                 army1Alive = army1.getAliveAmount();
             }
             if (isWarlordInArmy2 && army2.getAliveAmount() != army2Alive) {
                 army2.moveUnits();
-                //реорганизация армии
                 army2.armyToLine();
                 army2.armyToColumn();
-                //изменение размера
                 army2Alive = army2.getAliveAmount();
             }
             var warrior1 = army1.getFirstAlive();
